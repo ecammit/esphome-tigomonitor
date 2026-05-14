@@ -1684,9 +1684,6 @@ void TigoWebServer::build_esp_status_json(PSRAMString& json) {
   
   // Get ESP32 internal temperature (using persistent sensor handle)
   float internal_temp = 0.0f;
-  if (temp_sensor_handle_ != nullptr) {
-    temperature_sensor_get_celsius(temp_sensor_handle_, &internal_temp);
-  }
   
   // Get network stats
   bool network_connected = network::is_connected();
