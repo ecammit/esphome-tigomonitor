@@ -360,23 +360,9 @@ void TigoWebServer::setup() {
     } else {
       ESP_LOGI(TAG, "Web authentication not configured - pages remain open");
     }
-    
-    // Initialize temperature sensor once at startup
-    temperature_sensor_config_t temp_sensor_config = TEMPERATURE_SENSOR_CONFIG_DEFAULT(-10, 80);
-    esp_err_t err = temperature_sensor_install(&temp_sensor_config, &temp_sensor_handle_);
-    if (err == ESP_OK) {
-      err = temperature_sensor_enable(temp_sensor_handle_);
-      if (err == ESP_OK) {
-        ESP_LOGI(TAG, "Temperature sensor initialized successfully");
-      } else {
-        ESP_LOGW(TAG, "Failed to enable temperature sensor: %s", esp_err_to_name(err));
-        temperature_sensor_uninstall(temp_sensor_handle_);
-        temp_sensor_handle_ = nullptr;
-      }
-    } else {
-      ESP_LOGW(TAG, "Failed to install temperature sensor: %s", esp_err_to_name(err));
-      temp_sensor_handle_ = nullptr;
-    }
+
+    // disable temp sensor for ESP32-WROOM
+    temp_sensor_handle_ = nullptr;
     
     ESP_LOGI(TAG, "All routes registered");
   } else {
